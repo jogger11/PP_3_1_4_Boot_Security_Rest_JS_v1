@@ -1,12 +1,10 @@
 package ru.kata.spring.boot_security.demo.DAO;
 
-import ru.kata.spring.boot_security.demo.model.User;
-
 import org.springframework.stereotype.Repository;
+import ru.kata.spring.boot_security.demo.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import java.util.List;
 
 @Repository
@@ -21,7 +19,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User getUserById(Integer id) {
+    public User getUserById(Long id) {
         return entityManager.find(User.class, id);
     }
 
@@ -31,7 +29,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void removeUserById(Integer id) {
+    public void removeUserById(Long id) {
         entityManager.remove(getUserById(id));
     }
 

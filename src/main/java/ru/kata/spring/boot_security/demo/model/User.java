@@ -13,7 +13,7 @@ import java.util.Set;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     private String name;
 
@@ -21,13 +21,10 @@ public class User implements UserDetails {
     private String lastName;
 
     private Integer age;
-
+    @Column(name = "email", unique = true)
     private String email;
 
     private String password;
-
-    @Transient
-    private String passwordConfirm;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_role",
@@ -43,13 +40,14 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public User() {}
+    public User() {
+    }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -87,14 +85,6 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getPasswordConfirm() {
-        return passwordConfirm;
-    }
-
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
     }
 
     public Set<Role> getRoles() {

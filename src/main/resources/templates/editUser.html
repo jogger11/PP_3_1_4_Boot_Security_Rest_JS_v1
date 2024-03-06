@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>User ID</title>
-    <style>table th, table td {padding: 10px;}</style>
+    <!--    <style>table th, table td {padding: 10px;}</style>-->
 </head>
 
 <body>
 <h1>USER ID</h1>
-<form th:method="POST" th:action="@{/admin/edit?id={id}(id=${user.getId()})}" th:object="${user}">
+<form th:method="POST" th:action="@{/admin/edit/{id}(id=${user.getId()})}" th:object="${user}">
+    <input th:type="hidden" name="_method" th:value="PATCH">
     <label for="name">Name</label>
     <input type="text" th:field="*{name}" id="name"/>
     <br/>
@@ -25,14 +26,13 @@
     <input type="text" th:field="*{password}" id="password"/>
     <br/>
     <label>
-        <select size="3" multiple="multiple" name="roles" id="roles">
-            <option disabled>Roles:</option>
-            <option value="ROLE_ADMIN">ADMIN</option>
-            <option selected value="ROLE_USER">USER</option>
+        <select multiple="multiple" th:field="*{roles}">
+            <option value="" disabled selected>Roles:</option>
+            <option th:each="role : ${roles}" th:value="${role.name}" th:text="${role.name}"></option>
         </select>
     </label>
     <br/>
-<input type="submit" value="UPDATE"/>
+    <input type="submit" value="UPDATE"/>
 </form>
 
 <br/>

@@ -29,8 +29,17 @@
         <td th:utext="${user.getEmail()}">email</td>
         <td th:utext="${user.getRoles()}">role</td>
         <td>
-            <a th:href="@{/admin/edit?id={id}(id=${user.id})}">edit</a>
-            <a th:href="@{/admin/delete?id={id}(id=${user.id})}">delete</a>
+
+            <form th:action="@{/admin/edit/{id}(id=${user.id})}">
+                <input type="submit" value="edite">
+            </form>
+
+
+            <form th:method="POST" th:action="@{/admin/{id}(id=${user.id})}">
+                <input th:type="hidden" name="_method" th:value="DELETE">
+                <input type="submit" value="delete">
+            </form>
+
         </td>
     </tr>
 </table>

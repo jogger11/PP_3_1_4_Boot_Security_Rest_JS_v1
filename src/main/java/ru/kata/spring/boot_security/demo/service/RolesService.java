@@ -16,5 +16,5 @@ public interface RolesService {
 
     void edit(Role role);
 
-    Role getById(Integer id);
+    Role getById(Long id);
 }

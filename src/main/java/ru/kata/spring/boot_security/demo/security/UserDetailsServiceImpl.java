@@ -10,7 +10,6 @@ import ru.kata.spring.boot_security.demo.DAO.UserDAO;
 import ru.kata.spring.boot_security.demo.model.User;
 
 @Service
-@Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
     private UserDAO userDAO;
 
@@ -20,6 +19,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userDAO.getUserByEmail(email);
 
@@ -29,5 +29,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getRoles());
     }
-
 }

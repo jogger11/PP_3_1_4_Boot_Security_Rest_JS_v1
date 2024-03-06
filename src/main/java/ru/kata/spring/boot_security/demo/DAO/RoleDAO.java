@@ -16,5 +16,5 @@ public interface RoleDAO {
 
     void edit(Role role);
 
-    Role getRoleById(Integer id);
+    Role getRoleById(Long id);
 }

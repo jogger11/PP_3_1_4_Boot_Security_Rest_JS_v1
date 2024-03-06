@@ -12,7 +12,7 @@ import java.util.Set;
 @Repository
 public class RoleDAOImpl implements RoleDAO {
     @PersistenceContext
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
     @Override
     public Role getRoleByName(String name) {
@@ -45,7 +45,7 @@ public class RoleDAOImpl implements RoleDAO {
     }
 
     @Override
-    public Role getRoleById(Integer id) {
+    public Role getRoleById(Long id) {
         return entityManager.find(Role.class, id);
     }
 }

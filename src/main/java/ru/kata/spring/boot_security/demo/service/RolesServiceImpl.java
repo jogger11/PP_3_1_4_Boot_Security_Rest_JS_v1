@@ -18,19 +18,19 @@ public class RolesServiceImpl implements RolesService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Role getRoleByName(String name) {
         return roleDAO.getRoleByName(name);
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Role> getAllRoles() {
         return roleDAO.getAllRoles();
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Set<Role> getSetOfRoles(String[] roleNames) {
         return roleDAO.getSetOfRoles(roleNames);
     }
@@ -48,8 +48,8 @@ public class RolesServiceImpl implements RolesService {
     }
 
     @Override
-    @Transactional
-    public Role getById(Integer id) {
+    @Transactional(readOnly = true)
+    public Role getById(Long id) {
         return roleDAO.getRoleById(id);
     }
 }
