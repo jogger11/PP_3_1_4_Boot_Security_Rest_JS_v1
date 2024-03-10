@@ -6,7 +6,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -128,5 +130,13 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public String getStringRoles() {
+        List<String> list = roles.stream()
+                .map(role->role.toString())
+                .sorted()
+                .collect(Collectors.toList());
+        return String.join(" ", list);
     }
 }

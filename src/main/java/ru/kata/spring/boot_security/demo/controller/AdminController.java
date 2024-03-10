@@ -4,9 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RolesService;
 import ru.kata.spring.boot_security.demo.service.UsersService;
+
+import java.security.Principal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/admin")
@@ -26,8 +31,10 @@ public class AdminController {
     }
 
     @GetMapping("/users")
-    public String showUsers(Model model) {
+    public String showUsers(Model model, Principal principal) {
         model.addAttribute("users", usersService.getAllUsers());
+        model.addAttribute("thisUser", usersService.getUserByEmail(principal.getName()));
+        model.addAttribute("roles", rolesService.getAllRoles());
         return "users";
     }
 
@@ -47,8 +54,9 @@ public class AdminController {
 
     //Добавление пользователя
     @GetMapping("/new")
-    public String newUser(@ModelAttribute("user") User user, Model model) {
+    public String newUser(@ModelAttribute("user") User user, Model model, Principal principal) {
         model.addAttribute("roles", rolesService.getAllRoles());
+        model.addAttribute("thisUser", usersService.getUserByEmail(principal.getName()));
         return "newUser";
     }
 
@@ -61,17 +69,13 @@ public class AdminController {
     }
 
     //Редактирование данных пользователя
-    @GetMapping("/edit/{id}")
-    public String editUser(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", usersService.getUserById(id));
-        model.addAttribute("roles", rolesService.getAllRoles());
-        return "editUser";
-    }
-
-    @PatchMapping("/edit/{id}")
-    public String updateUser(@ModelAttribute("user") User user,
-                             @RequestParam(value = "roles") String[] roles) {
-        user.setRoles(rolesService.getSetOfRoles(roles));
+    @PatchMapping("/editUser")
+    public String updateUser(User user) {
+        Set<Role> listRoles = new HashSet<>();
+        for (Role role : user.getRoles()) {
+            listRoles.add(rolesService.getRoleByName(role.getName()));
+        }
+        user.setRoles(listRoles);
         usersService.updateUser(user);
         return "redirect:/admin/users";
     }
