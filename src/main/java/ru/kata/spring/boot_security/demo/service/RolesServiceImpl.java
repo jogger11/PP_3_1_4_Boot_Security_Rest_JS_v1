@@ -30,12 +30,6 @@ public class RolesServiceImpl implements RolesService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public Set<Role> getSetOfRoles(String[] roleNames) {
-        return roleDAO.getSetOfRoles(roleNames);
-    }
-
-    @Override
     @Transactional
     public void add(Role role) {
         roleDAO.add(role);

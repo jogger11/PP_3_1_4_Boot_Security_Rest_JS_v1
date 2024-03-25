@@ -10,8 +10,6 @@ public interface RolesService {
 
     List<Role> getAllRoles();
 
-    Set<Role> getSetOfRoles(String[] roleNames);
-
     void add(Role role);
 
     void edit(Role role);

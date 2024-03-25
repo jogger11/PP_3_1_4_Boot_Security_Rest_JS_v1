@@ -26,15 +26,6 @@ public class RoleDAOImpl implements RoleDAO {
     }
 
     @Override
-    public Set<Role> getSetOfRoles(String[] roleNames) {
-        Set<Role> roleSet = new HashSet<>();
-        for (String role : roleNames) {
-            roleSet.add(getRoleByName(role));
-        }
-        return roleSet;
-    }
-
-    @Override
     public void add(Role role) {
         entityManager.persist(role);
     }
